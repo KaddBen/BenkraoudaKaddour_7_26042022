@@ -1,0 +1,203 @@
+$light-grey:#E7E7E7;
+
+
+.bold {
+    font-weight: bold;
+}
+body {
+    padding: 2rem 7rem;
+    text-align: center;
+}
+img {
+    width: 30%;
+}
+.search {
+    &_bar {
+        width: 100%;
+        padding: 1.5rem 0.6rem;
+        background-color: $light-grey;
+        border: none;
+        border-radius: 0.3rem;
+    &_container {
+        position: relative;
+        margin-top: 3rem;
+    }
+    }
+    &_container {
+        width: 9rem;
+        position: relative;
+        border-radius: 0.3rem;
+            }
+    &_ingredient {
+        width: 100%;
+        padding: 1.3rem 0.7rem;
+        background-color: #3282F7;
+        border-radius: 0.3rem;
+        color: #FFF;
+        font-weight: bold;
+        border: none;
+    }
+    &_appareil {
+        width: 100%;
+        padding: 1.3rem 0.7rem;
+        background-color: #68D9A4;
+        border-radius: 0.3rem;
+        color: #FFF;
+        font-weight: bold;
+        border: none;
+    }
+    &_ustenstile {
+        width: 100%;
+        padding: 1.3rem 0.7rem;
+        background-color: #ED6454;
+        border-radius: 0.3rem;
+        color: #FFF;
+        font-weight: bold;
+        border: none;
+    };
+
+    &_dropdown {
+        
+        color: #FFFF;
+        width: 100%;
+        padding: 1rem 0.7rem;
+        border: none;
+        background-color: #3282F7;
+        position: relative;
+        height: fit-content;
+        border-radius:0.3rem 0.3rem 0 0 ;
+        &:focus { 
+            outline: none !important;
+            }
+        #{&}_ingredients {
+            background-color: #3282F7;
+     
+        }    
+        &--ustenstiles {
+            background-color: #ED6454;
+     
+        }    
+        &--appareils {
+            background-color: #68D9A4;
+     
+        }    
+       
+  
+    &_container {
+        color: #FFF;
+        width: 32rem;
+        max-height: 21rem;
+        overflow: hidden;
+        position: relative;
+        border-radius: 0 0 0.3rem 0.3rem;
+
+        & i {
+        position: absolute;
+        right: 1rem;
+        top: 1.2rem;
+         }      
+        }
+    }
+
+    }
+    .all_ingredients {
+        margin-top: -0.2rem;
+        width: 100%;
+        display: grid;
+        border: none;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 20px;
+        background-color: #3282F7;
+        & span {
+
+            margin-bottom: 0.5rem;
+        }
+    }
+.container {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.fa-solid.fa-magnifying-glass {
+position: absolute;
+right: 1rem;
+font-size: 1rem;
+top: 1.5rem;
+}
+
+.fa-angle-down {
+
+position: absolute;
+right: 1rem;
+top: 37%;
+color: #FFF;
+}
+
+.dishes {
+   &_section {
+    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 70px !important;
+    margin-top: 100px;
+   }
+
+   &_img {
+    width: 100%;
+    height: 51%;
+    background-color: #C7BEBE;
+    border-radius: 5px 5px 0 0;
+   }
+
+   &_container {
+    position: relative;
+    justify-self: center;
+    width: 100%;
+    height: 25vw;
+    margin-bottom: 70px;
+    background-color: #E5E5E5;
+    border-radius: 5px;
+   }
+
+   &_title {
+      position: absolute;
+      top: 55%;
+      left: 2%;
+   }
+
+   &_ingredients {
+      position: absolute;
+      text-align: left;
+      top: 65%;
+      left: 2%;
+      font-size: 12px;
+   }
+   &_description {
+      position: absolute;
+      text-align: left;
+      top: 65%;
+      right: 2%;
+      font-size: 12px;
+      margin-bottom: 5% ;
+      width: 45%;
+      height: 30%;
+      max-height: 30%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      
+   }
+   &_time {
+       position: absolute;
+       top: 55%;
+       right: 2%;
+   }
+}
+
+.ingredients_items {
+
+}
+
