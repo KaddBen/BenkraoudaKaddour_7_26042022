@@ -8,7 +8,6 @@ let childTagContainer;
 let ingredientRecipes = [];
 let spanIngredientRecipes = [];
 let spanApplianceRecipes = [];
-let spanAppliance = [];
 let spanUstensileRecipes = [];
 
 function dishesFactory(data) {
@@ -34,12 +33,10 @@ function dishesFactory(data) {
       const itemSpan = document.createElement("span");
       if (item.unit) {
         itemSpan.innerText = " " + item.quantity + item.unit;
-      } else if (!item.quantity && !item.unit){
-        itemSpan.innerText = " " ;
-      }
-      else {
+      } else {
         itemSpan.innerText = " " + item.quantity;
       }
+
       items.appendChild(itemBold);
       items.appendChild(itemSpan);
       dishesIngredients.appendChild(items);
@@ -83,18 +80,32 @@ const ustensilstSearch = document.querySelector(".search_ustenstile");
 const dishesSection = document.querySelector(".dishes_section");
 let dropdownAppliance;
 async function displayData(recipes) {
-  recipes.forEach((recipe) => {
-    const factory = dishesFactory(recipe);
-    const displayDishes = factory.getAllDishes();
-    dishesSection.appendChild(displayDishes);
-    recipe.ingredients.forEach((item) => {
-      ingredientArray.push(item.ingredient);
-    });
-    recipe.ustensils.forEach((item) => {
-      ustentilesArray.push(item);
-    });
-    applianceArray.push(recipe.appliance);
-  });
+ 
+for (let i = 0; i < recipes.length; i++) {
+  const recipe = recipes[i];
+  const factory = dishesFactory(recipe);
+  const displayDishes = factory.getAllDishes();
+  dishesSection.appendChild(displayDishes);
+  
+for (let j = 0; j < recipe.ingredients.length; j++) {
+  const ingredient = recipe.ingredients[j];
+  console.log(ingredient)
+  ingredientArray.push(ingredient.ingredient)
+}
+
+
+applianceArray.push(recipe.appliance)
+
+for (let k = 0; k < recipe.ustensils.length; k++) {
+  const ustensil = recipe.ustensils[k];
+  ustentilesArray.push(ustensil)
+}
+
+}
+    console.log(ingredientArray)   
+    console.log(ustentilesArray)
+    console.log(applianceArray)
+
 }
 
 async function init() {
@@ -105,11 +116,7 @@ async function init() {
 
 init();
 
-
 ingredientSearch.addEventListener("click", () => {
- 
-  const angleUp = document.querySelectorAll(".fa-angle-down")
-  angleUp[0].setAttribute("class", "fa-solid fa-angle-up")
   let searchContainer = document.querySelectorAll(
     ".search_container--ingredients"
   );
@@ -119,37 +126,16 @@ ingredientSearch.addEventListener("click", () => {
     "search_dropdown_container--ingredients"
   );
   searchIngredient.setAttribute("class", "search_dropdown");
-  searchIngredient.removeAttribute("value")
-  searchIngredient.setAttribute("placeholder", "Ingredients");
-
   const allIngredient = document.createElement("div");
   allIngredient.setAttribute("class", "all_ingredients");
   const dropdownContainer = document.querySelector(
     ".search_dropdown_container--ingredients"
   );
-  dropdownContainer.style.width = "32rem";
-  let searchBarContainer = document.querySelector(".search_bar_container")
-  if (searchBarContainer.children.length >= 3) {
-    if (ingredientRecipes.length <= 10) {
-      dropdownContainer.style.width = "9rem";
-      allIngredient.style.display = "flex";
-      allIngredient.style.flexDirection = "column";
-      allIngredient.style.textAlign = "center";
-    }
-   else {
-    dropdownContainer.style.width = "32rem";
-    allIngredient.style.display = "grid";
-    allIngredient.style.textAlign = "center";
-   }
-    resultCombined()
-    console.log(spanValueId)
-    }
-    
   dropdownContainer.appendChild(allIngredient);
-  
 
   searchIngredient.addEventListener("keyup", (e) => {
     const currentValue = e.target.value;
+
     if (currentValue.length >= 3) {
       dropdownContainer.style.width = "9rem";
       allIngredient.style.display = "flex";
@@ -206,7 +192,6 @@ ingredientSearch.addEventListener("click", () => {
             }
             newInit();
           } else {
-           
             queryTagContain = document.querySelector(".tag_container");
             childTagContainer = queryTagContainer.children;
             queryTagContain.appendChild(newFilter);
@@ -231,7 +216,7 @@ ingredientSearch.addEventListener("click", () => {
     spanIngredients.push(element);
   }
   spanIngredients.forEach((item) => {
-    item.addEventListener("mouseup", () => {
+    item.addEventListener("click", () => {
       const searchBar = document.querySelector(".search_bar_container");
       const newFilter = document.createElement("div");
       newFilter.setAttribute("class", "item_ingredients");
@@ -249,7 +234,6 @@ ingredientSearch.addEventListener("click", () => {
         tagIngredientContainer.appendChild(newFilter);
         searchBar.appendChild(tagIngredientContainer);
         async function newInit() {
-    
           const { recipes } = await getRecipes();
           const dishesSection = document.querySelector(".dishes_section");
           const dishesLength = dishesSection.children.length;
@@ -268,58 +252,20 @@ ingredientSearch.addEventListener("click", () => {
             return newRecipes.indexOf(ele) == pos;
           });
           displayData(filteredNewRecipes);
-          
         }
-      //newInit();
-        item.addEventListener("click", () => {
-          const queryTagContainer = document.querySelector(".tag_container");
-          childTagContainer = queryTagContainer.children
-          resultCombined()
-          
-        })
-           
+        newInit();
       } else {
-        item.addEventListener("click", () => {
         queryTagContain = document.querySelector(".tag_container");
         childTagContainer = queryTagContainer.children;
         queryTagContain.appendChild(newFilter);
         resultCombined();
-        })
       }
     });
-   
   });
-
-  window.addEventListener("click", (e) => {
-    const all_ingredients = document.querySelector(".all_ingredients")
-    const dropdown = document.querySelector(".search_dropdown")
-    
-    if (e.target === dropdown || e.target === all_ingredients ) {
-    }
-    else {
-      dropdownContainer.style.width = "9rem";
-      searchContainer[0].setAttribute(
-        "class",
-        "search_container--ingredients"
-      ); 
-      searchIngredient.setAttribute("class", "search_ingredient")
-      searchIngredient.value = "Ingredients"
-      searchIngredient.addEventListener("click", () => {
-      searchIngredient.value = ""
-      })   
-      all_ingredients.remove()  
-  angleUp[0].setAttribute("class", "fa-solid fa-angle-down")
-    }
-   
-  })
 });
-
-
 
 let filteredRecipesArray = [];
 applianceSearch.addEventListener("click", () => {
-  const angleUp = document.querySelectorAll(".fa-angle-down")
-  angleUp[1].setAttribute("class", "fa-solid fa-angle-up")
   let searchContainerAppliance = document.querySelectorAll(
     ".search_container--appareils"
   );
@@ -332,37 +278,18 @@ applianceSearch.addEventListener("click", () => {
     "class",
     "search_dropdown search_dropdown--appareils"
   );
-  searchAppliance.removeAttribute("value")
-  searchAppliance.setAttribute("placeholder", "Appareil")
   const allAppliance = document.createElement("div");
   allAppliance.setAttribute("class", "all_appliances");
   const dropdownContainer = document.querySelector(
     ".search_dropdown_container--appareils"
   );
-  dropdownContainer.style.width = "32rem";
-  let searchBarContainer = document.querySelector(".search_bar_container")
-  if (searchBarContainer.children.length >= 3) {
-    if (spanApplianceRecipes.length <= 10) {
-      dropdownContainer.style.width = "9rem";
-      allAppliance.style.display = "flex";
-      allAppliance.style.flexDirection = "column";
-      allAppliance.style.textAlign = "center";
-    }
-   else {
-    dropdownContainer.style.width = "32rem";
-    allAppliance.style.display = "grid";
-    allAppliance.style.textAlign = "center";
-   }
-    resultCombined()
-    console.log(spanValueId)
-    }
   dropdownContainer.appendChild(allAppliance);
   const filteredApplianceArray = applianceArray.filter(function (ele, pos) {
     return applianceArray.indexOf(ele) == pos;
   });
   let dropdownAppliance = document.querySelector(".search_dropdown--appareils");
   dropdownAppliance.addEventListener("keyup", async (e) => {
-    let currentValue = e.target.value;
+    const currentValue = e.target.value;
     if (currentValue.length >= 3) {
       const searBarApplianceContainer = document.querySelector(
         ".search_dropdown_container--appareils"
@@ -388,7 +315,7 @@ applianceSearch.addEventListener("click", () => {
         const Span = document.createElement("span");
         Span.innerText = element;
         allAppliance.appendChild(Span);
-        Span.addEventListener("mouseup", () => {
+        Span.addEventListener("click", () => {
           const searchBar = document.querySelector(".search_bar_container");
           newFilter.setAttribute("class", "item_appliance");
           newFilter.setAttribute("id", 2);
@@ -440,7 +367,7 @@ applianceSearch.addEventListener("click", () => {
     spanAppliance.push(element);
   }
   spanAppliance.forEach((item) => {
-    item.addEventListener("mouseup", () => {
+    item.addEventListener("click", () => {
       const searchBar = document.querySelector(".search_bar_container");
       const newFilter = document.createElement("div");
       newFilter.setAttribute("class", "item_appliance");
@@ -457,19 +384,14 @@ applianceSearch.addEventListener("click", () => {
         tagIngredientContainer.setAttribute("class", "tag_container");
         tagIngredientContainer.appendChild(newFilter);
         searchBar.appendChild(tagIngredientContainer);
-       // newAppliance();
-        item.addEventListener("click", () => {
-          const queryTagContainer = document.querySelector(".tag_container");
-          childTagContainer = queryTagContainer.children
-          resultCombined()
-        })
+        newAppliance();
       } else {
         queryTagContain = document.querySelector(".tag_container");
         childTagContainer = queryTagContain.children;
         queryTagContainer.appendChild(newFilter);
         resultCombined();
       }
-    
+
       async function newAppliance() {
         const { recipes } = await getRecipes();
         const dishesSection = document.querySelector(".dishes_section");
@@ -489,37 +411,14 @@ applianceSearch.addEventListener("click", () => {
       }
     });
   });
-  window.addEventListener("click", (e) => {
-    const all_appliances = document.querySelector(".all_appliances")
-    const dropdown_appliance = document.querySelector(".search_dropdown--appareils")
-    if (e.target === dropdown_appliance || e.target === all_appliances ) {
-   
-    }
-    else {
-      searchContainerAppliance[0].style.width = "9rem"
-      searchContainerAppliance[0].setAttribute(
-        "class",
-        "search_container--appareils"
-      );
-      searchAppliance.setAttribute("class", "search_appareil");    
-      searchAppliance.value = "Appareils"
-      searchAppliance.addEventListener("click", () => {
-        searchAppliance.value = ""
-      })   
-    all_appliances.remove()
-  angleUp[1].setAttribute("class", "fa-solid fa-angle-down")
-    }
-  })
 });
 
 ustensilstSearch.addEventListener("click", () => {
-  const angleUp = document.querySelectorAll(".fa-angle-down")
-  angleUp[2].setAttribute("class", "fa-solid fa-angle-up")
-  let searchUstensileContainer = document.querySelectorAll(
+  let searchContainer = document.querySelectorAll(
     ".search_container--ustenstiles"
   );
   let searchUstensiles = document.querySelector(".search_ustenstile");
-  searchUstensileContainer[0].setAttribute("class", "search_dropdown_container--ustensiles");
+  searchContainer[0].setAttribute("class", "search_dropdown_container");
   searchUstensiles.setAttribute(
     "class",
     "search_dropdown search_dropdown--ustenstiles"
@@ -529,18 +428,16 @@ ustensilstSearch.addEventListener("click", () => {
   const dropdownContainer = document.querySelector(
     ".search_dropdown_container"
   );
-  searchUstensileContainer[0].appendChild(allUstensiles);
+  dropdownContainer.appendChild(allUstensiles);
   const filteredUstensilesArray = ustentilesArray.filter(function (ele, pos) {
     return ustentilesArray.indexOf(ele) == pos;
   });
-  searchUstensiles.removeAttribute("value")
-  searchUstensiles.setAttribute("placeholder", "Ustensiles")
 
   searchUstensiles.addEventListener("keyup", (e) => {
-    let currentValue = e.target.value;
+    const currentValue = e.target.value;
     if (currentValue.length >= 3) {
       const searBarUstensileContainer = document.querySelector(
-        ".search_dropdown_container--ustensiles"
+        ".search_dropdown_container"
       );
       searBarUstensileContainer.style.width = "9rem";
       allUstensiles.style.display = "flex";
@@ -601,12 +498,10 @@ ustensilstSearch.addEventListener("click", () => {
             queryTagContain.appendChild(newFilter);
             resultCombined();
           }
-        })
-      })
-    
+        });
+      });
     }
-    
-})
+  });
   filteredUstensilesArray.forEach((element) => {
     const Span = document.createElement("span");
     Span.innerText = element;
@@ -662,73 +557,63 @@ ustensilstSearch.addEventListener("click", () => {
       }
     });
   });
-    
-  window.addEventListener("mouseup", (e) => {
-   const dropdownUstensiles = document.querySelector(".search_dropdown--ustenstiles")
-  
-    if (e.target === allUstensiles || e.target === dropdownUstensiles ) {
-   
-    }
-    else {
-      searchUstensileContainer[0].setAttribute(
-        "class",
-        "search_container--ustenstiles"
-      );
-      searchUstensiles.setAttribute("class", "search_ustenstile");    
-      searchUstensiles.value ="Ustensiles"
-      searchUstensiles.addEventListener("click", (e) => {
-        searchUstensiles.value = ""
-      })
-      allUstensiles.remove()
-  angleUp[2].setAttribute("class", "fa-solid fa-angle-down")
-    }
-    
-  })
 });
 
 const searchBar = document.querySelector(".search_bar");
-searchBar.addEventListener("keyup", (e) => { 
+searchBar.addEventListener("keyup", (e) => {
   const currentValue = e.target.value;
   if (currentValue.length >= 3) {
     async function newAppliance() {
       const { recipes } = await getRecipes();
-      const dishesContainer = document.querySelectorAll(".dishes_container");
-      dishesContainer.forEach((container) => {
-        container.remove();
-      });
-      const newName = recipes.filter((recipe) => {
-        return recipe.name.includes(currentValue);
-      });
-      const filteredNewName = newName.filter(function (ele, pos) {
-        return newName.indexOf(ele) == pos;
-      });
-      const newDescription = recipes.filter((recipe) => {
-        return recipe.description.includes(currentValue);
-      });
-      const filteredNewDescription = newDescription.filter(function (ele, pos) {
-        return newDescription.indexOf(ele) == pos;
-      });
-      const newIngredient = recipes.filter((recipe) => {
-        return recipe.ingredients.some(
-          (ingredient) => ingredient.ingredient.startsWith(currentValue)
-        );
-      
-      });
-      const filteredNewIngredient = newIngredient.filter(function (ele, pos) {
-        return newIngredient.indexOf(ele) == pos;
-      });
-      if (filteredNewName.length > 0) {
-        displayData(filteredNewName);
-      } else if (filteredNewDescription.length > 0) {
-        displayData(filteredNewDescription);
-      } else if (filteredNewIngredient.length > 0) {
-        displayData(filteredNewIngredient);
+      const dishesSection = document.querySelector(".dishes_section");
+      const sectionChildren = dishesSection.children.length
+      const newNameArray = []
+      let newIngredientArray = []
+      const IngredientArray = []
+      const newDescriptionArray = []
+for (let i = 0; i < sectionChildren  + 1 ; i++) {
+  const element = dishesSection.firstChild;
+  if (element) {
+    element.remove(); 
+  }
+}
+for (let i = 0; i < recipes.length; i++) {
+  const dishe = recipes[i];
+  if (dishe.name.includes(currentValue)) {
+    newNameArray.push(dishe)
+  }     
+}
+
+for (let i = 0; i < recipes.length; i++) {
+  const dishe = recipes[i];
+  if (dishe.description.includes(currentValue)) {
+    newDescriptionArray.push(dishe)
+  }     
+}
+for (let i = 0; i < recipes.length; i++) {
+
+  const dishe = recipes[i];
+  for (let i = 0; i < dishe.ingredients.length; i++) {
+    const ingredients = dishe.ingredients[i];
+    const ingredient = ingredients.ingredient;
+   if (ingredient.startsWith(currentValue)) {
+     IngredientArray.push(dishe)
+   }
+  }
+   newIngredientArray = []
+}
+
+      if (newNameArray.length > 0) {
+        displayData(newNameArray);
+      } else if (newDescriptionArray.length > 0) {
+        displayData(newDescriptionArray);
+      } else if (IngredientArray.length > 0) {
+        displayData(IngredientArray);
       }
     }
 newAppliance()
   }
 });
-
 
 async function resultCombined() {
 
@@ -741,10 +626,6 @@ async function resultCombined() {
     spanValueId.push(objectValue);
   }
 
-  if (spanValueId.length > 1) {
-    spanValueId.shift()
-  }
-  console.log(spanValueId)
   async function pushIngredient() {
     const { recipes } = await getRecipes();
     const dishesSection = document.querySelector(".dishes_section");
@@ -776,17 +657,15 @@ async function resultCombined() {
             ++countId3;
           }
         }
-        console.log(countId1 + countId2 + countId3)
         if (countId1 + countId2 + countId3 === spanValueId.length) {
-          
           arrayRecipes.push(recipe);
         }
       });
+    })
       countId1 = 0;
       countId2 = 0;
       countId3 = 0;
       itemRecipes = [];
-    })
 
 
     if (document.querySelector(".all_ingredients")) {
@@ -808,9 +687,7 @@ async function resultCombined() {
     }
 
     function displayIngredient() {
-    ingredientRecipes = []
       for (let i = 0; i < childIngredientLength; i++) {
-        console.log(childIngredientLength)
         const element = allIngredients.firstChild;
         element.remove();
       }
@@ -826,14 +703,12 @@ async function resultCombined() {
         allIngredients.appendChild(Span);
       });
 
-      console.log(ingredientRecipes)
-
       spanIngredientRecipes.forEach((item) => {
-        item.addEventListener("mouseup", () => {
+        item.addEventListener("click", () => {
           const searchBar = document.querySelector(".search_bar_container");
           const newFilter = document.createElement("div");
           newFilter.setAttribute("class", "item_ingredients");
-          newFilter.setAttribute("id", 1);
+          newFilter.setAttribute("id", 3);
           const spanFilter = document.createElement("span");
           spanFilter.innerText = item.innerHTML;
           const iconFilter = document.createElement("icon");
@@ -867,10 +742,8 @@ async function resultCombined() {
             }
             newInit();
           } else {
-              queryTagContain = document.querySelector(".tag_container");
-              childTagContainer = queryTagContainer.children;
-              queryTagContain.appendChild(newFilter);
-              resultCombined()
+            queryTagContain.appendChild(newFilter);
+            resultCombined();
           }
         });
       });
@@ -882,7 +755,6 @@ const dishesLength = dishesSection.children.length;
         const element = dishesSection.firstChild;
         element.remove();
       }
-      console.log(arrayRecipes)
       displayData(arrayRecipes);
     }
 
@@ -893,19 +765,12 @@ const dishesLength = dishesSection.children.length;
       }
 
       arrayRecipes.forEach((item) => {
-        spanAppliance.push(item.appliance);
-      });
-      const filteredSpanAppliance = spanAppliance.filter(function (ele, pos) {
-        return spanAppliance.indexOf(ele) == pos;
-      });
-
-      filteredSpanAppliance.forEach(appliance => {
         const Span = document.createElement("span");
-        Span.innerText = appliance;
-        spanApplianceRecipes.push(Span)
+        Span.innerText = item.appliance;
+        spanApplianceRecipes.push(Span);
         allAppliance.appendChild(Span);
       });
-      console.log(spanApplianceRecipes)
+
       spanApplianceRecipes.forEach((item) => {
         item.addEventListener("click", () => {
           const searchBar = document.querySelector(".search_bar_container");
@@ -1029,5 +894,3 @@ const dishesLength = dishesSection.children.length;
 }
   pushIngredient();
 }
-
-
