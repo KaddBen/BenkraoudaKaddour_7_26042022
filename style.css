@@ -25,7 +25,7 @@ img {
 }
 
 .search_container--ingredients {
-  width: 9rem;
+  width: 9rem !important;
   position: relative;
   border-radius: 0.3rem;
 }
@@ -100,10 +100,10 @@ img {
 .search_dropdown_container--ingredients {
   color: #fff;
   width: 32rem;
-  max-height: 21rem;
+  max-height: 20.5rem;
   overflow: hidden;
   position: relative;
-  border-radius: 0.3rem 0.3rem 0 0;
+  border-radius: 0.3rem 0.3rem 0.3rem 0.3rem;
 }
 
 .search_dropdown_container--ingredients i {
@@ -118,7 +118,7 @@ img {
   max-height: 9rem;
   overflow: hidden;
   position: relative;
-  border-radius: 0.3rem 0.3rem 0 0;
+  border-radius: 0.3rem 0.3rem 0.3rem 0.3rem;
   background-color: #68d9a4;
 }
 
@@ -232,6 +232,7 @@ img {
 }
 
 .dishes_section {
+  position: relative;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -350,6 +351,18 @@ img {
       -ms-flex-direction: row;
           flex-direction: row;
   gap: 0.2rem;
+}
+
+.no_result_msg {
+  z-index: 1000;
+  position: absolute;
+  text-align: center;
+  -ms-grid-column-align: center;
+      justify-self: center;
+  width: 60%;
+  font-size: 1.5rem;
+  font-weight: bold;
+  visibility: hidden;
 }
 
 @media screen and (min-width: 200px) and (max-width: 1341px) {
