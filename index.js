@@ -171,7 +171,7 @@ ingredientSearch.addEventListener("click", (e) => {
     const currentValue = e.target.value;
 
     //Réinitialise la liste d'ingredients dans le dropdown
-    /* if (
+    if (
       currentValue.length === 0 &&
       allIngredient.children.length != filteredingredientArray.length &&
       searchBarContainer.children.length < 4 && dishesSection.children.length === recipes.length
@@ -223,7 +223,7 @@ ingredientSearch.addEventListener("click", (e) => {
           }
         });
       });
-    }*/
+    }
     // Redimensionne la taille du dropdown en fonction du nombre d'ingredient disponible a l'intérieur
     if (currentValue.length >= 3) {
       dropdownContainer.style.width = "9rem";
