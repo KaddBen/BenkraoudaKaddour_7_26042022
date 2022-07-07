@@ -1271,7 +1271,7 @@ async function resultCombined() {
             const { recipes } = await getRecipes();
             const dishesSection = document.querySelector(".dishes_section");
             const dishesLength = dishesSection.children.length;
-            for (let i = 0; i < dishesLength ; i++) {
+            for (let i = 0; i < dishesLength; i++) {
               const element = dishesSection.firstChild;
               element.remove();
             }
@@ -1508,7 +1508,10 @@ async function displaySearchBarResult() {
     var allIngredients = document.querySelector(".all_ingredients");
     var childIngredientLength = allIngredients.children.length;
 
-    if (dishesSection.children.length === recipes.length + 1 || dishesSection.children.length === recipes.length) {
+    if (
+      dishesSection.children.length === recipes.length + 1 ||
+      dishesSection.children.length === recipes.length
+    ) {
       const dishesLength = dishesSection.children.length;
       for (let i = 1; i < dishesLength; i++) {
         const element = dishesSection.children[1];
@@ -1527,7 +1530,10 @@ async function displaySearchBarResult() {
     let { recipes } = await getRecipes();
     var allAppliance = document.querySelector(".all_appliances");
     var childApplianceLength = allAppliance.children.length;
-    if (dishesSection.children.length === recipes.length + 1 || dishesSection.children.length === recipes.length) {
+    if (
+      dishesSection.children.length === recipes.length + 1 ||
+      dishesSection.children.length === recipes.length
+    ) {
       const dishesLength = dishesSection.children.length;
       for (let i = 1; i < dishesLength; i++) {
         const element = dishesSection.children[1];
@@ -1545,7 +1551,10 @@ async function displaySearchBarResult() {
     let { recipes } = await getRecipes();
     var allUstensile = document.querySelector(".all_ustensiles");
     var childUstensileLength = allUstensile.children.length;
-    if (dishesSection.children.length === recipes.length + 1 || dishesSection.children.length === recipes.length) {
+    if (
+      dishesSection.children.length === recipes.length + 1 ||
+      dishesSection.children.length === recipes.length
+    ) {
       const dishesLength = dishesSection.children.length;
       for (let i = 1; i < dishesLength; i++) {
         const element = dishesSection.children[1];
@@ -1615,7 +1624,7 @@ async function displaySearchBarResult() {
             for (let i = 0; i < dishesLength + 1; i++) {
               const element = dishesSection.children[0];
               if (element) {
-              element.remove();
+                element.remove();
               }
             }
             filteredSearchResult = filteredSearchResult.filter((recipe) => {
@@ -1765,9 +1774,9 @@ async function displaySearchBarResult() {
       Span.innerText = appliance;
       spanApplianceRecipes.push(Span);
       allAppliance.appendChild(Span);
-    })
+    });
 
-   /* filteredSearchResult.forEach((item) => {
+    /* filteredSearchResult.forEach((item) => {
       const Span = document.createElement("span");
       Span.innerText = item.appliance;
       spanApplianceRecipes.push(Span);
@@ -1807,7 +1816,7 @@ async function displaySearchBarResult() {
             const element = dishesSection.children[0];
             if (element) {
               element.remove();
-            } 
+            }
           }
           filteredSearchResult = filteredSearchResult.filter((recipe) => {
             return recipe.appliance.startsWith(item.innerHTML);
@@ -1919,7 +1928,7 @@ async function displaySearchBarResult() {
             const element = dishesSection.children[0];
             if (element) {
               element.remove();
-            } 
+            }
           }
           filteredSearchResult = filteredSearchResult.filter((recipe) => {
             return recipe.ustensils.some((ustensile) =>
