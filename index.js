@@ -1060,7 +1060,6 @@ searchBar.addEventListener("keyup", (e) => {
 });
 //Affiche les les plats en fonction des tags actif
 async function resultCombined() {
-  console.log("hello")
   let arrayRecipes = [];
   arrayRecipes = [];
   spanValueId = [];
@@ -1252,7 +1251,6 @@ async function resultCombined() {
     }
     spanIngredientRecipes.forEach((item) => {
       item.addEventListener("mousedown", () => {
-        console.log("mousedown")
         const searchBar = document.querySelector(".search_bar_container");
         const newFilter = document.createElement("div");
         newFilter.setAttribute("class", "item_ingredients");
@@ -1510,7 +1508,7 @@ async function displaySearchBarResult() {
     var allIngredients = document.querySelector(".all_ingredients");
     var childIngredientLength = allIngredients.children.length;
 
-    if (dishesSection.children.length === recipes.length + 1) {
+    if (dishesSection.children.length === recipes.length + 1 || dishesSection.children.length === recipes.length) {
       const dishesLength = dishesSection.children.length;
       for (let i = 1; i < dishesLength; i++) {
         const element = dishesSection.children[1];
@@ -1529,7 +1527,7 @@ async function displaySearchBarResult() {
     let { recipes } = await getRecipes();
     var allAppliance = document.querySelector(".all_appliances");
     var childApplianceLength = allAppliance.children.length;
-    if (dishesSection.children.length === recipes.length + 1) {
+    if (dishesSection.children.length === recipes.length + 1 || dishesSection.children.length === recipes.length) {
       const dishesLength = dishesSection.children.length;
       for (let i = 1; i < dishesLength; i++) {
         const element = dishesSection.children[1];
@@ -1547,7 +1545,7 @@ async function displaySearchBarResult() {
     let { recipes } = await getRecipes();
     var allUstensile = document.querySelector(".all_ustensiles");
     var childUstensileLength = allUstensile.children.length;
-    if (dishesSection.children.length === recipes.length + 1) {
+    if (dishesSection.children.length === recipes.length + 1 || dishesSection.children.length === recipes.length) {
       const dishesLength = dishesSection.children.length;
       for (let i = 1; i < dishesLength; i++) {
         const element = dishesSection.children[1];
@@ -1613,9 +1611,12 @@ async function displaySearchBarResult() {
             searchBar.appendChild(tagIngredientContainer);
             const dishesSection = document.querySelector(".dishes_section");
             const dishesLength = dishesSection.children.length;
-            for (let i = 1; i < dishesLength; i++) {
-              const element = dishesSection.children[1];
+
+            for (let i = 0; i < dishesLength + 1; i++) {
+              const element = dishesSection.children[0];
+              if (element) {
               element.remove();
+              }
             }
             filteredSearchResult = filteredSearchResult.filter((recipe) => {
               return recipe.ingredients.some((ingredient) =>
@@ -1623,6 +1624,7 @@ async function displaySearchBarResult() {
               );
             });
             displayData(filteredSearchResult);
+            console.table(filteredSearchResult);
             ingredientSearch.addEventListener("mouseup", () => {
               function test() {
                 var allIngredients = document.querySelector(".all_ingredients");
@@ -1754,13 +1756,23 @@ async function displaySearchBarResult() {
     filteredSearchResult.forEach((item) => {
       spanAppliance.push(item.appliance);
     });
+    let filteredSpanAppliances = spanAppliance.filter(function (ele, pos) {
+      return spanAppliance.indexOf(ele) == pos;
+    });
+    spanAppliance = [];
+    filteredSpanAppliances.forEach((appliance) => {
+      const Span = document.createElement("span");
+      Span.innerText = appliance;
+      spanApplianceRecipes.push(Span);
+      allAppliance.appendChild(Span);
+    })
 
-    filteredSearchResult.forEach((item) => {
+   /* filteredSearchResult.forEach((item) => {
       const Span = document.createElement("span");
       Span.innerText = item.appliance;
       spanApplianceRecipes.push(Span);
       allAppliance.appendChild(Span);
-    });
+    }); */
     let queryAllAppliances = document.querySelectorAll(".all_appliances");
     if (queryAllAppliances.length > 1) {
       for (let i = 1; i < queryAllAppliances.length; i++) {
@@ -1791,9 +1803,11 @@ async function displaySearchBarResult() {
           searchBar.appendChild(tagIngredientContainer);
           const dishesSection = document.querySelector(".dishes_section");
           const dishesLength = dishesSection.children.length;
-          for (let i = 1; i < dishesLength; i++) {
-            const element = dishesSection.children[1];
-            element.remove();
+          for (let i = 0; i < dishesLength + 1; i++) {
+            const element = dishesSection.children[0];
+            if (element) {
+              element.remove();
+            } 
           }
           filteredSearchResult = filteredSearchResult.filter((recipe) => {
             return recipe.appliance.startsWith(item.innerHTML);
@@ -1901,18 +1915,17 @@ async function displaySearchBarResult() {
           searchBar.appendChild(tagUstensilContainer);
           const dishesSection = document.querySelector(".dishes_section");
           const dishesLength = dishesSection.children.length;
-          for (let i = 1; i < dishesLength; i++) {
-            const element = dishesSection.children[1];
-            element.remove();
+          for (let i = 0; i < dishesLength + 1; i++) {
+            const element = dishesSection.children[0];
+            if (element) {
+              element.remove();
+            } 
           }
           filteredSearchResult = filteredSearchResult.filter((recipe) => {
             return recipe.ustensils.some((ustensile) =>
               ustensile.startsWith(item.innerHTML)
             );
           });
-          if ((noResultMsg.style.visibility = "visible")) {
-            filteredSearchResult = [];
-          }
           displayData(filteredSearchResult);
           ustensileSearch.addEventListener("mouseup", () => {
             function testUstensile() {
