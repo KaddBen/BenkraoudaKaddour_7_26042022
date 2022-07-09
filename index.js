@@ -1470,7 +1470,11 @@ window.addEventListener("mousedown", (e) => {
       if (e.target === cross) {
         cross.parentElement.remove();
         function reInit() {
-          if (childTagContainer.length === 0 && e.target === cross) {
+          if (
+            childTagContainer.length === 0 &&
+            e.target === cross &&
+            searchBar.value.length < 3
+          ) {
             e.stopImmediatePropagation();
             const dishesSection = document.querySelector(".dishes_section");
             const dishesLength = dishesSection.children.length;
@@ -1488,6 +1492,27 @@ window.addEventListener("mousedown", (e) => {
             AllTagContain.forEach((container) => {
               container.remove();
             });
+          } else if (
+            childTagContainer.length === 0 &&
+            e.target === cross &&
+            searchBar.value.length >= 3
+          ) {
+            const dishesSection = document.querySelector(".dishes_section");
+            const dishesLength = dishesSection.children.length;
+            if (dishesLength > 0) {
+              for (let i = 0; i < dishesLength; i++) {
+                const element = dishesSection.children[0];
+                element.remove();
+              }
+
+              const filteredSearchResult = searchBarResult.filter(function (
+                ele,
+                pos
+              ) {
+                return searchBarResult.indexOf(ele) == pos;
+              });
+              displayData(filteredSearchResult);
+            }
           } else {
             searchIngredient.removeEventListener(
               "click",
@@ -1501,7 +1526,6 @@ window.addEventListener("mousedown", (e) => {
     }
   }
 });
-
 async function displaySearchBarResult() {
   if (document.querySelector(".all_ingredients")) {
     let { recipes } = await getRecipes();
