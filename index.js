@@ -1650,8 +1650,8 @@ async function displaySearchBarResult() {
             const element = dishesSection.children[1];
             element.remove();
           }
+          displayIngredient();
         }
-        displayIngredient();
       } else if (dishesSection.children.length <= 1) {
         searchBarResult = [];
         resultCombined();
