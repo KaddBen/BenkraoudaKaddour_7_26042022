@@ -1029,8 +1029,8 @@ searchBar.addEventListener("keyup", (e) => {
         const filtereSearchResult = searchBarResult.filter(function (ele, pos) {
           return searchBarResult.indexOf(ele) == pos;
         });
-        searchResultCopy = [];
-        filtereSearchResult.forEach((item) => {
+          searchResultCopy   = [];
+          filtereSearchResult.forEach((item) => {
           searchResultCopy.push(item);
         });
         displayData(filtereSearchResult);
@@ -1598,7 +1598,7 @@ window.addEventListener("mousedown", (e) => {
 });
 
 async function displaySearchBarResult() {
-  async function ingredientIngredient() {
+  async function refreshTagItem() {
     if (document.querySelector(".all_ingredients")) {
       const { recipes } = await getRecipes();
       var allIngredients = document.querySelector(".all_ingredients");
@@ -2326,5 +2326,5 @@ async function displaySearchBarResult() {
       }
     }
   }
-  setTimeout(ingredientIngredient, 0, 1);
+  setTimeout(refreshTagItem, 0, 1);
 }

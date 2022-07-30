@@ -20,6 +20,9 @@ const searchContainer = document.querySelectorAll(
 const ingredient = document.querySelector(".search_ingredient");
 let searchBarResult = [];
 let searchResultCopy = [];
+let newName = [];
+let newDescription = [];
+let newIngredient = [];
 function dishesFactory(data) {
   const { name, servings, ingredients, id, time, description } = data;
   // Affiche chaque plats dans la page d'index
@@ -950,7 +953,7 @@ ustensileSearch.addEventListener("click", () => {
     allUstensiles.remove();
   }
 });
-//ALGORITHME DE LA BARRE DE RECHERCHE EN VERSION PROGRAMMATION FONCTIONNELLE
+//ALGORITHME DE LA BARRE DE RECHERCHE EN VERSION PROGRAMMATION NATIVE
 const searchBar = document.querySelector(".search_bar");
 searchBar.addEventListener("keyup", (e) => {
   const currentValue = e.target.value;
@@ -1058,6 +1061,10 @@ searchBar.addEventListener("keyup", (e) => {
         const filtereSearchResult = searchBarResult.filter(function (ele, pos) {
           return searchBarResult.indexOf(ele) == pos;
         });
+        searchResultCopy   = [];
+        filtereSearchResult.forEach((item) => {
+        searchResultCopy.push(item);
+      });
         displayData(filtereSearchResult);
         searchIngredient.addEventListener("click", displaySearchBarResult);
         applianceSearch.addEventListener("click", displaySearchBarResult);
@@ -1066,9 +1073,9 @@ searchBar.addEventListener("keyup", (e) => {
 
       //Affiche un message si aucun resultat n'a été trouvé
       else if (
-        filterednewName.length === 0 &&
-        filterednewDescription.length === 0 &&
-        filterednewIngredient.length === 0
+        newName.length === 0 &&
+        newDescription.length === 0 &&
+        newIngredient.length === 0
       ) {
         while (dishesSection.children.length === 0) {
           noResultMsg = document.createElement("div");
@@ -1627,7 +1634,7 @@ window.addEventListener("mousedown", (e) => {
 });
 
 async function displaySearchBarResult() {
-  async function ingredientIngredient() {
+  async function RefreshTagItem() {
     if (document.querySelector(".all_ingredients")) {
       const { recipes } = await getRecipes();
       var allIngredients = document.querySelector(".all_ingredients");
@@ -2355,5 +2362,5 @@ async function displaySearchBarResult() {
       }
     }
   }
-  setTimeout(ingredientIngredient, 0, 1);
+  setTimeout(RefreshTagItem, 0, 1);
 }
