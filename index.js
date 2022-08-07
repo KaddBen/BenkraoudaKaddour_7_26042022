@@ -1088,7 +1088,7 @@ searchBar.addEventListener("keyup", (e) => {
   //Supprime le resultat de la recherche précédente
   let allArticle = document.querySelectorAll("article");
   noResultMsg.style.visibility = "hidden";
-  if (currentValue === "") {
+  if (currentValue === "" &&(childTagContainer === 0 || !childTagContainer)) {
     async function removeDishes(time = 2) {
       for (let i = 0; i < time; i++) {
         for (let i = 0; i < allArticle.length; ++i) {
@@ -1122,6 +1122,9 @@ searchBar.addEventListener("keyup", (e) => {
 
       setTimeout(resizeUstensile, 0.000000000000001);
     });
+  }
+  else {
+    setTimeout(resultCombined, 10);
   }
 });
 //Affiche les les plats en fonction des tags actif
